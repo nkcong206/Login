@@ -7,48 +7,46 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class App {
-    public static void main(String[] args) {
-        CheckUser checkUser = new CheckUser();
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        User user = new User();
         Scanner scanner = new Scanner(System.in);
-        int mode = 1;
-        while (true) {
-            if (mode == 1) {
-                System.out.println("Chon 1 trong 2 chuc nang sau:" +
-                        "\n" + "1. Sign In" +
-                        "\n" + "0. Out");
-                int a = Integer.parseInt(scanner.nextLine());
-                while (a != 1 & a != 0) {
-                    System.out.println("chon lai 1 trong 2!");
-                    a = Integer.parseInt(scanner.nextLine());
+        int mode = 0;
+        while (mode != 4) {
+            System.out.println("Chon chuc nang:" +
+                    "\n1. Sign In" +
+                    "\n2. Sign Up" +
+                    "\n3. Delete" +
+                    "\n4. Out");
+            mode = Integer.parseInt(scanner.nextLine());
+            switch (mode) {
+                case 1: {
+                    System.out.println("username:");
+                    String username = scanner.nextLine();
+                    System.out.println("password:");
+                    String password = scanner.nextLine();
+                    user.SignIn(username, password);
+                    break;
                 }
-                if (a == 1) {
-                    try {
-                        System.out.println("Nhap username:");
-                        String username = scanner.nextLine();
-                        System.out.println("Nhap password:");
-                        String password = scanner.nextLine();
-                        if (checkUser.SignIn(username, password)) {
-                            mode = 2;
-                        }
-                    } catch (SQLException | ClassNotFoundException e) {
-                        System.out.println("error:" + e);
-                    }
-                } else {
+                case 2: {
+                    System.out.println("username:");
+                    String username = scanner.nextLine();
+                    System.out.println("password:");
+                    String password = scanner.nextLine();
+                    user.SignUp(username, password);
+                    break;
+                }
+                case 3: {
+                    System.out.println("username:");
+                    String username = scanner.nextLine();
+                    user.Delete(username);
+                    break;
+                }
+                case 4: {
                     System.exit(1);
                 }
-            } else {
-                System.out.println("Chon 1 trong 2 chuc nang sau:" +
-                        "\n" + "1. Sign Out" +
-                        "\n" + "0. Out");
-                int a = Integer.parseInt(scanner.nextLine());
-                while (a != 1 & a != 0) {
-                    System.out.println("chon lai 1 trong 2!");
-                    a = Integer.parseInt(scanner.nextLine());
-                }
-                if (a == 1) {
-                    mode = 1;
-                } else {
-                    System.exit(1);
+                default: {
+                    System.out.println("Chon lai");
+                    break;
                 }
             }
         }
